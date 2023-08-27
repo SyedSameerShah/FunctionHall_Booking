@@ -1,0 +1,33 @@
+.bg-color-blue{
+    background-color: #3cb9fc;
+}
+.bg-color-p{
+    background-color: #8a2be2;
+}
+
+@media screen and (max-width: 572px) {
+
+    .wid-100{
+        width: 100% !important;
+    }
+    .m-5{
+        margin: 1rem !important ;
+    }
+    
+}
+
+@media screen and (max-width: 1048px) {
+
+    .center{
+        justify-content: space-around !important ;
+    }
+    
+}
+
+@media screen and (max-width: 787px) {
+
+    .center{
+        justify-content: stretch !important ;
+    }
+    
+}
