@@ -6,7 +6,7 @@ import FunctionHall from "./components/FunctionHall";
 function App() {
 
   const client = new ApolloClient({
-    uri: "http://localhost:4000/graphql",
+    uri: "https://function-hall-booking-zpk8-8mgjsudog-syedsameershah.vercel.app/graphql",
     cache: new InMemoryCache()
   });
 
