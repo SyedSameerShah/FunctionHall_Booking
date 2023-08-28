@@ -1,7 +1,5 @@
 const { FunctionHall } = require("../models/FunctionHall");
-var getISODay = require('date-fns/getISODay');
 var parseISO = require('date-fns/parseISO');
-var add = require('date-fns/add');
 var formatISO = require('date-fns/formatISO');
 const resolvers = {
     Query: {
