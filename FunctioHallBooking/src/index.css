@@ -5,29 +5,53 @@
     background-color: #8a2be2;
 }
 
-@media screen and (max-width: 572px) {
+input:focus{
+    outline: none !important;
+}
 
+.text-justify{
+    text-align: justify;
+}
+
+@media screen and (max-width: 752px) {
+    .top{
+        top: 85px !important;
+    }
     .wid-100{
         width: 100% !important;
     }
     .m-5{
         margin: 1rem !important ;
     }
-    
-}
+    input:focus{
+        outline: none !important;
+    }
+    .wrapper{
+        justify-content: center;
+    }
 
+    .filter{
+        position: absolute;
+        left: 0;
+        
+    }
+}
+/* 
 @media screen and (max-width: 1048px) {
 
+    
+    
     .center{
         justify-content: space-around !important ;
     }
     
-}
+} */
 
 @media screen and (max-width: 787px) {
 
     .center{
         justify-content: stretch !important ;
     }
+
     
 }

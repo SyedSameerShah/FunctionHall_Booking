@@ -28,6 +28,7 @@ const QUERY_PRICE_FILTER = gql`
                 city
                 state
             }
+            bookings
         }
     }
 `;
@@ -59,7 +60,7 @@ const Hall = () => {
     return (
         <>
             <Nav filter={fetchprice} />
-            <div className="d-flex flex-wrap center justify-content-even">
+            <div className="d-flex flex-wrap justify-content-evenly wrapper">
                 {
                 filtereddata ? (filtereddata.price.map((hall: hall) => {
                     return <Card id={hall.id} name={hall.name} price={hall.price} discription={""} imgURL= {`/images/${hall.id}.jpeg`} location={hall.location} />

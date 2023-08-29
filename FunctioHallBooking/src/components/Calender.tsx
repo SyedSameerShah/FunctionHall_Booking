@@ -1,6 +1,6 @@
-import { add, addMonths, format, getDate, getDaysInMonth,  startOfMonth, sub, subMonths } from 'date-fns';
+import { add, addMonths, format, getDate, getDaysInMonth,  getTime,  startOfMonth, sub, subMonths } from 'date-fns';
 import { useState } from 'react';
-import {  gql, useMutation, ApolloQueryResult } from '@apollo/client';
+import {  gql, useMutation, ApolloQueryResult, OperationVariables } from '@apollo/client';
 import '../index.css';
 import { Button, Modal } from 'react-bootstrap';
 import CalenderCell from './CalenderCell';
@@ -17,16 +17,15 @@ const ADD_DATE = gql`
 interface props extends React.PropsWithChildren {
     data:any;
     id?:string;
-    refetch: () => Promise<ApolloQueryResult<any>>
+    refetch: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>>
 
 }
 
 const  Calender:React.FC<props> = ({id,data,refetch}) => {
 
-    const [modal, setmodal] = useState(false);
+    const [modal, setmodal] = useState<boolean>(false);
     const [bookingDate, setbookingDate] = useState<String>("");
-    const [btnType, setbtnType] = useState(" btn btn-outline-dark ")
-    // console.log(id);
+    const [btnType, setbtnType] = useState<string>(" btn btn-outline-dark ")
 
 
     const [setdate, { data: confirm }] = useMutation( ADD_DATE, {
@@ -64,12 +63,11 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
     }
     console.log( startdate, getDate(startdate) )
 
-    const disablefun = (index: number) => {
+    const disablefun = (index:number) => {
         let date = add(startdate, { days: index });
-        let datestr = date.toString();
+        let timeStamp = getTime( date).toString();
         if ( date > new Date()) {
-            if (data && data.hall.bookings.includes(datestr)) {
-                setbtnType("btn-primary")
+            if(data && data.hall.bookings.includes(timeStamp)) {
                 return true;
             }
             else
@@ -104,9 +102,9 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
 
 
                         return (<CalenderCell key={index}
-                            date={  formatISO( add(startdate, { days: index }))}
+                            date={  formatISO( add(startdate, { days: index +1 }))}
                             setmodal={setmodal}
-                            disabled={disablefun(index)}
+                            disabled={disablefun( index + 1)}
                             setbookingDate={setbookingDate}
                             display={index + 1} />)
                     })
@@ -134,11 +132,15 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={() => setmodal(false)} className='btn-dark' >close</Button>
-                        <Button onClick={() => {
+                        <Button onClick={ async () => {
                             setdate({
                                 variables: { id, date: bookingDate }
                             });
-                            refetch();
+                            console.log("ads",confirm && confirm.addDate)
+                            if(confirm && confirm.addDate)
+                            await refetch({
+                                variables: { hallID: id }
+                            });
                             setmodal(false);
 
                         }} className="btn-dark ">Confirm</Button>

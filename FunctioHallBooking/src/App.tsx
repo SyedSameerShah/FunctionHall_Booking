@@ -4,9 +4,9 @@ import Hall from "./components/Hall";
 import FunctionHall from "./components/FunctionHall";
 
 function App() {
-
+//https://function-hall-booking-zpk8-8mgjsudog-syedsameershah.vercel.app
   const client = new ApolloClient({
-    uri: "https://function-hall-booking-zpk8-8mgjsudog-syedsameershah.vercel.app/graphql",
+    uri: "http://localhost:4000/graphql",
     cache: new InMemoryCache()
   });
 

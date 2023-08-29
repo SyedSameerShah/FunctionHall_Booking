@@ -30,7 +30,7 @@ const FunctionHall = () => {
 
     return (
         <>
-            <h1 className=' text-3xl font-bold underline text-center' > {} </h1>
+            <h1 className=' text-3xl font-bold underline text-center' > {data.hall.name} calender </h1>
 
             <div className="d-flex m-2 justify-content-sm-center">
                 <Calender id={id} data={data} refetch={refetch} />
@@ -42,7 +42,7 @@ const FunctionHall = () => {
                 </div>
                 <div className="px-3 shadow-lg w-100 p-3">
                     <h5 className="card-title mb-2">Name: {data && data.hall.name}</h5>
-                    <p className="card-text mb-2" > <strong> Description: </strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, aspernatur iusto! Neque harum vel animi amet corporis tempora architecto nesciunt laborum at consectetur quo, id, dolor quam ex qui facere.</p>
+                    <p className="card-text mb-2 text-justify" > <strong> Description: </strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, aspernatur iusto! Neque harum vel animi amet corporis tempora architecto nesciunt laborum at consectetur quo, id, dolor quam ex qui facere.</p>
                     <p className="card-text mb-2"><strong>Location: </strong> {data && data.hall.location.city}, {data && data.hall.location.state} </p>
                     <p className="card-text mb-2"><strong>Price: </strong>{data && data.hall.price} INR</p>
                     <p className="card-text mb-2"><strong>Food-type: </strong> Non-Veg</p>

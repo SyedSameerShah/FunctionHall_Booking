@@ -17,8 +17,8 @@ const Card : React.FC<props> = ({
             <div className="card-body">
                 <h5 className="card-title">{name}</h5>
                 <p className="card-text" style={{ maxWidth: "19rem" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim, aspernatur iusto! Neque harum vel animi amet corporis tempora architecto nesciunt laborum at consectetur quo, id, dolor quam ex qui facere.</p>
-                <p className="card-text">{location && location.city}, {location && location.state}</p>
-                <p className="card-text">{price} INR</p>
+                <p className="card-text"><i className="fa-solid fa-location-dot" style={{color:" #000000"}}></i> {location && location.city}, {location && location.state}</p>
+                <p className="card-text">{price} <i className="fa-solid fa-indian-rupee-sign" style={{color: "#000000;"}}></i></p>
                 <Link to={`/halls/${id}`} className="btn btn-dark">Check Availability</Link>
             </div>
         </div>
