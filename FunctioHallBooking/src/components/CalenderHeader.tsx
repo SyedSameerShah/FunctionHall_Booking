@@ -2,7 +2,7 @@ interface props extends React.PropsWithChildren{
     display:String;
     grid?:object;
     disabled?:boolean;
-    onclick:() => void;
+    onclick?:() => void;
 }
 
 const CalenderHeader: React.FC<props> = (
@@ -16,7 +16,7 @@ const CalenderHeader: React.FC<props> = (
 
     return (
         <>
-        <button  type="button" className="btn btn-outline-dark text-center m-1" disabled={disabled || false}  style={grid} onClick={()=>{onclick();console.log("next")}}>
+        <button  type="button" className="btn btn-outline-dark text-center m-1 px-0" disabled={disabled || false}  style={grid} onClick={()=>{ onclick && onclick()}}>
             {display}
         </button>
         </>

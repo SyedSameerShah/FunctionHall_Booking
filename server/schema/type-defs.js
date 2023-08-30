@@ -4,7 +4,7 @@ const typeDefs = gql`
 
 type Query {
     hello: String
-    halls(distinct_on:[String]): [ hall! ]!
+    halls: [ hall! ]!
     searchHall(name:String): [hall]!
     hall( id:ID! ): hall!
     price( price: Int, location:locationInput, date:String ) : [hall!]!

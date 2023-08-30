@@ -29,23 +29,8 @@ input:focus{
     .wrapper{
         justify-content: center;
     }
-
-    .filter{
-        position: absolute;
-        left: 0;
-        
-    }
 }
-/* 
-@media screen and (max-width: 1048px) {
 
-    
-    
-    .center{
-        justify-content: space-around !important ;
-    }
-    
-} */
 
 @media screen and (max-width: 787px) {
 

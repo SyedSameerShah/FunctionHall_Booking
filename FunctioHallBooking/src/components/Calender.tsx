@@ -1,12 +1,11 @@
-import { add, addMonths, format, getDate, getDaysInMonth,  getTime,  startOfMonth, sub, subMonths } from 'date-fns';
+import { gql, useMutation } from '@apollo/client';
+import { add, addMonths, format, getDate, getDaysInMonth, startOfMonth, sub, subMonths } from 'date-fns';
 import { useState } from 'react';
-import {  gql, useMutation, ApolloQueryResult, OperationVariables } from '@apollo/client';
-import '../index.css';
-import { Button, Modal } from 'react-bootstrap';
 import CalenderCell from './CalenderCell';
 import CalenderHeader from './CalenderHeader';
-import formatISO from 'date-fns/formatISO';
-
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import '../index.css';
 
 
 const ADD_DATE = gql`
@@ -15,86 +14,57 @@ const ADD_DATE = gql`
 } `;
 
 interface props extends React.PropsWithChildren {
-    data:any;
-    id?:string;
-    refetch: (variables?: Partial<OperationVariables> | undefined) => Promise<ApolloQueryResult<any>>
+    data: any;
+    id?: string;
+    refetch: () => void;
 
 }
 
-const  Calender:React.FC<props> = ({id,data,refetch}) => {
+const Calender: React.FC<props> = ({ id, data, refetch }) => {
 
     const [modal, setmodal] = useState<boolean>(false);
-    const [bookingDate, setbookingDate] = useState<String>("");
-    const [btnType, setbtnType] = useState<string>(" btn btn-outline-dark ")
+    const [bookingDate, setbookingDate] = useState<string>("");
+    const [startdate, setstartdate] = useState<Date>(startOfMonth(new Date()));
 
 
-    const [setdate, { data: confirm }] = useMutation( ADD_DATE, {
+    const [setdate, { data: confirm }] = useMutation(ADD_DATE, {
         variables: {
             id, bookingDate
         }
     });
 
-    if (confirm)
-        console.log(confirm);
-
     const daysofweek: Array<String> = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-    const [startdate, setstartdate] = useState<Date>(startOfMonth(new Date()))
     const numofdays: number = getDaysInMonth(startdate);
     const prenodays: number = getDaysInMonth(subMonths(startdate, 1));
     const prefixday: number = startdate.getDay();
-    let no: number = prenodays - prefixday + 1;
     const suffixdays: number = addMonths(startdate, 1).getDay() > 0 ? 7 - addMonths(startdate, 1).getDay() : 0;
+    const formateDate: Date = sub(new Date(bookingDate), { days: 1 });
+    let no: number = prenodays - prefixday + 1;
+    let numberArr: Array<number> = Array.from({ length: prefixday }).map(() => no++);
+    const prevmonth = (): void => setstartdate(sub(startdate, { months: 1 }));
+    const prevyear = (): void => setstartdate(sub(startdate, { years: 1 }));
+    const nextmonth = (): void => { setstartdate(add(startdate, { months: 1 })) };
+    const nextyear = (): void => { setstartdate(add(startdate, { years: 1 }));}
 
-    const prevmonth = () => setstartdate(sub(startdate, { months: 1 }));
-    const nextmonth = () => { setstartdate( add(startdate, { months: 1 })) ;console.log("next1")};
-    const nextyear = () => add(startdate, { years: 1 });
-
-    let calender: Array<number> = []
-
-    for (let i = 0; i < prefixday; i++) {
-        calender.push(no++);
-    }
-
-    for (let i = 0; i < numofdays; i++) {
-        calender.push(i + 1);
-    }
-    for (let i = 0; i < suffixdays; i++) {
-        calender.push(i + 1);
-    }
-    console.log( startdate, getDate(startdate) )
-
-    const disablefun = (index:number) => {
-        let date = add(startdate, { days: index });
-        let timeStamp = getTime( date).toString();
-        if ( date > new Date()) {
-            if(data && data.hall.bookings.includes(timeStamp)) {
-                return true;
-            }
-            else
-                return false;
-        }
-        else
-            return true;
-    }
-
+    console.log(startdate, getDate(startdate));
 
     return (
         <>
-            <div className="d-grid text-center w-75 wid-100  shadow-lg rounded-2 " style={{gridTemplateColumns: "repeat(7, minmax(0, 1fr))"} as React.CSSProperties}>
-                <CalenderHeader display="<<" onclick={prevmonth} />
+            <div className="d-grid text-center w-75 wid-100  shadow-lg rounded-2 " style={{ gridTemplateColumns: "repeat(7, minmax(0, 1fr))" }}>
+                <CalenderHeader display="<<" onclick={prevyear} />
                 <CalenderHeader display="<" onclick={prevmonth} />
-                <CalenderHeader display={format(startdate, "LLLL yyyy")} onclick={prevmonth} grid={{gridColumn: "span 3"}} />
+                <CalenderHeader display={format(startdate, "LLLL yyyy")} onclick={prevmonth} grid={{ gridColumn: "span 3" }} />
                 <CalenderHeader display=">" onclick={nextmonth} />
                 <CalenderHeader display=">>" onclick={nextyear} />
                 {
-                    daysofweek.map((index, value) => {
-                        return <CalenderCell key={value} display={index} classname={btnType} disabled={false} />
+                    daysofweek.map((value, index) => {
+                        return <CalenderHeader key={index} display={value}   />
                     })
                 }
                 {
                     Array.from({ length: prefixday }).map((_, index) => {
 
-                        return <CalenderCell key={index} display={no++} classname={btnType}  disabled={true} />
+                        return <CalenderCell key={index} display={numberArr[index]} startdate={startdate} index={index} disabled={true} />
                     })
                 }
                 {
@@ -102,9 +72,10 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
 
 
                         return (<CalenderCell key={index}
-                            date={  formatISO( add(startdate, { days: index +1 }))}
                             setmodal={setmodal}
-                            disabled={disablefun( index + 1)}
+                            index={index + 1}
+                            startdate={startdate}
+                            booking={data && data.hall.bookings}
                             setbookingDate={setbookingDate}
                             display={index + 1} />)
                     })
@@ -112,10 +83,10 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
                 {
                     Array.from({ length: suffixdays }).map((_, index) => {
 
-                        return < CalenderCell setbookingDate={setbookingDate} key={index} display={index + 1} classname={btnType} disabled={true} />
+                        return <CalenderCell setbookingDate={setbookingDate} index={index} startdate={startdate} key={index} display={index + 1} disabled={true} />
                     })
                 }
-                <Modal show={modal} centered>
+                <Modal show={modal} centered >
                     <Modal.Header >
                         <Modal.Title>
                             {data && data.hall.name}
@@ -124,25 +95,22 @@ const  Calender:React.FC<props> = ({id,data,refetch}) => {
                     <Modal.Body>
                         {
                             <section>
-                                <h5> Location : {data && data.hall.location.city}, {data && data.hall.location.state }</h5>
+                                <h5> Location : {data && data.hall.location.city}, {data && data.hall.location.state}</h5>
                                 <h5>Price: {data && data.hall.price} INR</h5>
-                                <h5>Booking Date: {bookingDate}</h5>
+                                <h5>Booking Date: {modal && format(formateDate, "EEE dd LLL yyyy ")}</h5>
                             </section>
                         }
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={() => setmodal(false)} className='btn-dark' >close</Button>
-                        <Button onClick={ async () => {
-                            setdate({
+                        <Button onClick={async () => {
+                            await setdate({
                                 variables: { id, date: bookingDate }
                             });
-                            console.log("ads",confirm && confirm.addDate)
+                            console.log("ads", confirm && confirm.addDate);
                             if(confirm && confirm.addDate)
-                            await refetch({
-                                variables: { hallID: id }
-                            });
+                            refetch();
                             setmodal(false);
-
                         }} className="btn-dark ">Confirm</Button>
                     </Modal.Footer>
                 </Modal>

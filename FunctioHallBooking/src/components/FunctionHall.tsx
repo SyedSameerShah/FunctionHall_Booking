@@ -13,7 +13,6 @@ const GET_FUNCTIONHALL_QUERY = gql`
         state
     }
     bookings
-    
   }
 }`;
 
@@ -30,15 +29,14 @@ const FunctionHall = () => {
 
     return (
         <>
-            <h1 className=' text-3xl font-bold underline text-center' > {data.hall.name} calender </h1>
-
+            <h1 className=' text-3xl font-bold underline text-center' > {data && data.hall.name}: calender </h1>
             <div className="d-flex m-2 justify-content-sm-center">
                 <Calender id={id} data={data} refetch={refetch} />
             </div>
             <h3 className="text-center mt-5">Details</h3>
             <div className="d-flex m-5 min-w-75  bg-light flex-column flex-lg-row" >
                 <div>
-            <img className="card-img-top rounded-3  shadow mr-3" src={`/images/${data && data.hall.id}.jpeg`} alt="Card image cap" />
+                    <img className="card-img-top rounded-3  shadow mr-3" src={`/images/${data && data.hall.id}.jpeg`} alt="Card image cap" />
                 </div>
                 <div className="px-3 shadow-lg w-100 p-3">
                     <h5 className="card-title mb-2">Name: {data && data.hall.name}</h5>
