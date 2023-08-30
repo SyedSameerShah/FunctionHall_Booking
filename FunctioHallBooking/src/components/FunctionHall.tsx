@@ -16,9 +16,12 @@ const GET_FUNCTIONHALL_QUERY = gql`
   }
 }`;
 
+
+
 const FunctionHall = () => {
-    const { id } = useParams();
-    const { data, error, refetch } = useQuery(GET_FUNCTIONHALL_QUERY, {
+    const { id } = useParams<string>();
+    const { data, error } = useQuery(GET_FUNCTIONHALL_QUERY, {
+        fetchPolicy: "network-only",
         variables: { hallID: id }
     });
     if (data)
@@ -31,7 +34,7 @@ const FunctionHall = () => {
         <>
             <h1 className=' text-3xl font-bold underline text-center' > {data && data.hall.name}: calender </h1>
             <div className="d-flex m-2 justify-content-sm-center">
-                <Calender id={id} data={data} refetch={refetch} />
+                <Calender id={id} data={data} QUERY={GET_FUNCTIONHALL_QUERY} />
             </div>
             <h3 className="text-center mt-5">Details</h3>
             <div className="d-flex m-5 min-w-75  bg-light flex-column flex-lg-row" >

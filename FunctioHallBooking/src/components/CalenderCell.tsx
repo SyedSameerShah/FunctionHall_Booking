@@ -4,7 +4,7 @@ interface Props extends React.PropsWithChildren {
   display: number | String;
   disabled?: boolean;
   startdate: Date
-  booking?: Array<string>
+  booking?: Array<String>
   setmodal?: React.Dispatch<React.SetStateAction<boolean>>
   setbookingDate?: React.Dispatch<React.SetStateAction<string>>
   index: number

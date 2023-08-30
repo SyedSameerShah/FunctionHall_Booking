@@ -1,4 +1,4 @@
-import { gql, useMutation } from '@apollo/client';
+import { DocumentNode, gql, useMutation } from '@apollo/client';
 import { add, addMonths, format, getDate, getDaysInMonth, startOfMonth, sub, subMonths } from 'date-fns';
 import { useState } from 'react';
 import CalenderCell from './CalenderCell';
@@ -13,24 +13,38 @@ const ADD_DATE = gql`
       addDate(input:{ id :$id, date :$date })
 } `;
 
+type hall = {
+    hall: {
+        id: String;
+        price: number;
+        name: String;
+        location: {
+            city: String;
+            state: String;
+        };
+        bookings: [String];
+    }
+}
+
 interface props extends React.PropsWithChildren {
-    data: any;
+    data: hall;
     id?: string;
-    refetch: () => void;
+    QUERY: DocumentNode;
 
 }
 
-const Calender: React.FC<props> = ({ id, data, refetch }) => {
+const Calender: React.FC<props> = ({ id, data, QUERY }) => {
 
     const [modal, setmodal] = useState<boolean>(false);
     const [bookingDate, setbookingDate] = useState<string>("");
     const [startdate, setstartdate] = useState<Date>(startOfMonth(new Date()));
 
 
-    const [setdate, { data: confirm }] = useMutation(ADD_DATE, {
+    const [setdate, _] = useMutation(ADD_DATE, {
         variables: {
             id, bookingDate
-        }
+        },
+        refetchQueries: [QUERY]
     });
 
     const daysofweek: Array<String> = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
@@ -44,7 +58,7 @@ const Calender: React.FC<props> = ({ id, data, refetch }) => {
     const prevmonth = (): void => setstartdate(sub(startdate, { months: 1 }));
     const prevyear = (): void => setstartdate(sub(startdate, { years: 1 }));
     const nextmonth = (): void => { setstartdate(add(startdate, { months: 1 })) };
-    const nextyear = (): void => { setstartdate(add(startdate, { years: 1 }));}
+    const nextyear = (): void => { setstartdate(add(startdate, { years: 1 })); }
 
     console.log(startdate, getDate(startdate));
 
@@ -58,7 +72,7 @@ const Calender: React.FC<props> = ({ id, data, refetch }) => {
                 <CalenderHeader display=">>" onclick={nextyear} />
                 {
                     daysofweek.map((value, index) => {
-                        return <CalenderHeader key={index} display={value}   />
+                        return <CalenderHeader key={index} display={value} />
                     })
                 }
                 {
@@ -107,9 +121,6 @@ const Calender: React.FC<props> = ({ id, data, refetch }) => {
                             await setdate({
                                 variables: { id, date: bookingDate }
                             });
-                            console.log("ads", confirm && confirm.addDate);
-                            if(confirm && confirm.addDate)
-                            refetch();
                             setmodal(false);
                         }} className="btn-dark ">Confirm</Button>
                     </Modal.Footer>
