@@ -31,7 +31,7 @@ const resolvers = {
         },
         searchHall: async (_, args) => {
             console.log("name ", args.name);
-            let data = await FunctionHall.find({ name: new RegExp(args.name, 'i') });
+            let data = await FunctionHall.find({ name: {$regex: args.name, $options: 'i'} });
             return data;
         }
     },
