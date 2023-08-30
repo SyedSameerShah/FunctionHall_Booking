@@ -53,10 +53,10 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
     const [search, setsearch] = useState<string>("");
     const [priceFilter, setpriceFilter] = useState<filter>();
     const [modal, setmodal] = useState<boolean>(false);
+    let uniquesearch: Array<string> = []
 
 
     const [fetchname, { data: searchdata }] = useLazyQuery(GET_SEARCH_RESULT);
-    let uniquesearch: Array<string> = []
 
     const [fetchlocation, { data }] = useLazyQuery(GET_STATE_CITY);
     return (
