@@ -3,7 +3,6 @@ var parseISO = require('date-fns/parseISO');
 var formatISO = require('date-fns/formatISO');
 const resolvers = {
     Query: {
-        hello: () => "hello",
         halls: async () => {
             let data = await FunctionHall.find({});
             return data;
@@ -15,7 +14,7 @@ const resolvers = {
                 ISODate = newdate.substring(0, 11).concat("18:30:00.000Z");
             }
             const query = {
-                'price': { $gt: args.price || 0 },
+                'price': { $gte: args.price || 0 },
                 'location.city': args.location.city || /./,
                 'location.state': args.location.state || /./
             }

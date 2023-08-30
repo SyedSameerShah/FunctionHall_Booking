@@ -11,7 +11,6 @@ type filter = {
     city?: String;
     state?: String;
 
-
 }
 
 type hall = {
@@ -74,8 +73,8 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                                 }
                             });
                             setdisplay("d-block");
-                        }} placeholder="Enter the name of Hall" aria-label="Search" />
-                        <button className="btn btn-secondary rounded-5" type="submit"><i className="fa-solid fa-magnifying-glass" style={{ color: " #030303;" }}></i></button>
+                        }} placeholder="Enter the name of Venu" aria-label="Search" />
+                        <button className="btn btn-secondary rounded-5" type="submit"><i className="fa-solid fa-magnifying-glass" style={{ color: " #030303" }}></i></button>
                         <section className={`position-absolute bg-light top ${display}`} style={{ top: "47px", width: "205px" }}>
                             <ul className="m-0 p-0">
                                 {
@@ -86,13 +85,12 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                                         </li>)
                                     })
                                 }
-
                             </ul>
                         </section>
                     </div>
 
 
-                    <Button className="btn btn-secondary  fs-6 filter " onClick={() => { fetchlocation(); setmodal(true) }}>Filter</Button>
+                    <Button className="btn btn-secondary filter " onClick={() => { fetchlocation(); setmodal(true) }}>Filter</Button>
                     <Modal show={modal} centered>
                         <Modal.Header >
                             <Modal.Title>
@@ -100,7 +98,7 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Price: <input type="number" className="form-control m-1" onChange={(e) => { setpriceFilter({ price: Number(e.target.value) }); }} />
+                            Price: <input type="number" className="form-control m-1" placeholder="Enter the minimum price" onChange={(e) => { setpriceFilter({ price: Number(e.target.value) }); }} />
                             Date:<input type="date" className="form-control m-1" onChange={(e) => { setpriceFilter({ date: e.target.value }); console.log(priceFilter?.date) }} />
                             State:<select className=" form-select btn-dark m-1" onChange={(event) => { setpriceFilter({ state: event.target.value }); console.log(priceFilter?.state) }}>
                                 <option value="" selected>select state</option>

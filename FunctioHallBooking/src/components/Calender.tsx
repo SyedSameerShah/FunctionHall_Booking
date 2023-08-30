@@ -109,8 +109,8 @@ const Calender: React.FC<props> = ({ id, data, QUERY }) => {
                     <Modal.Body>
                         {
                             <section>
-                                <h5> Location : {data && data.hall.location.city}, {data && data.hall.location.state}</h5>
-                                <h5>Price: {data && data.hall.price} INR</h5>
+                                <h5> Location : <i className="fa-solid fa-sm fa-location-dot" style={{color:" #000000"}}></i> {data && data.hall.location.city}, {data && data.hall.location.state}</h5>
+                                <h5>Price: {data && data.hall.price} <i className="fa-solid fa-sm fa-indian-rupee-sign" style={{color: "#000000"}}></i> </h5>
                                 <h5>Booking Date: {modal && format(formateDate, "EEE dd LLL yyyy ")}</h5>
                             </section>
                         }

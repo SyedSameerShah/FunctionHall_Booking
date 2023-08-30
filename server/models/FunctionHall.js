@@ -4,6 +4,9 @@ const hallSchema = new mongoose.Schema({
     _id: mongoose.Schema.ObjectId,
     name: String,
     price: Number,
+    occupency:String,
+    discription:String,
+    cuisine:String,
     location: {
         city:String,
         state:String

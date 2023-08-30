@@ -3,7 +3,6 @@ const gql = require("graphql-tag");
 const typeDefs = gql`
 
 type Query {
-    hello: String
     halls: [ hall! ]!
     searchHall(name:String): [hall]!
     hall( id:ID! ): hall!
@@ -31,12 +30,17 @@ type location {
     state: String
 }
 
+
+
 type hall {
     id: ID!
-    name: String
-    price: Int!
-    bookings: [String]!
+    name: String!
+    price: Int
+    discription:String
+    occupency:String
+    cuisine:String
     location: location!
+    bookings: [String]!
 }
 
 `;
