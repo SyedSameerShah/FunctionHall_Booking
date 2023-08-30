@@ -17,17 +17,13 @@ type Mutation {
 
 input dateInput {
     id:ID!
-    date:String
+    date:String!
    
 }
 
 input locationInput {
     city: String
     state: String
-}
-
-type booking {
-    date: String
 }
 
 type location {
