@@ -1,4 +1,4 @@
-import {  useState } from "react"
+import { useState } from "react"
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { gql, useLazyQuery } from '@apollo/client';
@@ -24,7 +24,6 @@ type hall = {
 const GET_STATE_CITY = gql`
     query Query{
         halls{
-            
             location{
                 state
                 city
@@ -46,8 +45,6 @@ const GET_SEARCH_RESULT = gql`
 
 
 const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
-
-
 
     const [display, setdisplay] = useState<string>("d-none")
     const [search, setsearch] = useState<string>("");
@@ -101,44 +98,44 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                         <Modal.Body>
                             Price: <input type="number" className="form-control m-1" onChange={(e) => { setpriceFilter({ price: Number(e.target.value) }); }} />
                             Date:<input type="date" className="form-control m-1" onChange={(e) => { setpriceFilter({ date: e.target.value }); console.log(priceFilter?.date) }} />
-                            State:<select className=" form-select btn-dark m-1" onChange={(event) =>{ setpriceFilter({ state: event.target.value });console.log(priceFilter?.state)}}>
-                            <option value="" selected>select state</option>
-                            {
-                                data && data.halls.map((hall: hall) => {
-                                    if (!uniquesearch.includes(hall.location.state)) {
-                                        uniquesearch.push(hall.location.state)
-                                        return (<option className="" value={hall.location.state}> {hall.location.state}</option>)
-                                    }
-                                })
-                            }
-                        </select>
-                        City: <select className="form-select " onChange={(event) => setpriceFilter({ city: event.target.value })}>
-                            <option value="" selected>select city</option>
-                            {
-                                data && data.halls.map((hall: hall) => {
-                                    if (!uniquesearch.includes(hall.location.city)) {
-                                        uniquesearch.push(hall.location.city)
-                                        return (<option value={hall.location.city}>{hall.location.city}</option>)
-                                    }
-                                })
-                            }
-                        </select>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button className="btn btn-dark" onClick={() => setmodal(false)} >close</Button>
-                        <Button onClick={() => {
-                            filter({
-                                variables: {
-                                    price: priceFilter?.price,
-                                    city: priceFilter?.city,
-                                    state: priceFilter?.state,
-                                    date: priceFilter?.date?.length != 0 && priceFilter?.date
+                            State:<select className=" form-select btn-dark m-1" onChange={(event) => { setpriceFilter({ state: event.target.value }); console.log(priceFilter?.state) }}>
+                                <option value="" selected>select state</option>
+                                {
+                                    data && data.halls.map((hall: hall) => {
+                                        if (!uniquesearch.includes(hall.location.state)) {
+                                            uniquesearch.push(hall.location.state)
+                                            return (<option className="" value={hall.location.state}> {hall.location.state}</option>)
+                                        }
+                                    })
                                 }
-                            }); setmodal(false)
-                        }} className=" btn btn-dark " >Apply</Button>
-                    </Modal.Footer>
-                </Modal>
-        </div>
+                            </select>
+                            City: <select className="form-select " onChange={(event) => setpriceFilter({ city: event.target.value })}>
+                                <option value="" selected>select city</option>
+                                {
+                                    data && data.halls.map((hall: hall) => {
+                                        if (!uniquesearch.includes(hall.location.city)) {
+                                            uniquesearch.push(hall.location.city)
+                                            return (<option value={hall.location.city}>{hall.location.city}</option>)
+                                        }
+                                    })
+                                }
+                            </select>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button className="btn btn-dark" onClick={() => setmodal(false)} >close</Button>
+                            <Button onClick={() => {
+                                filter({
+                                    variables: {
+                                        price: priceFilter?.price,
+                                        city: priceFilter?.city,
+                                        state: priceFilter?.state,
+                                        date: priceFilter?.date?.length != 0 && priceFilter?.date
+                                    }
+                                }); setmodal(false)
+                            }} className=" btn btn-dark " >Apply</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             </nav >
         </div >
     )
