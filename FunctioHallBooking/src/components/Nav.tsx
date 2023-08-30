@@ -53,7 +53,11 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
     let uniquesearch: Array<string> = []
 
 
-    const [fetchname, { data: searchdata }] = useLazyQuery(GET_SEARCH_RESULT);
+    const [fetchname, { data: searchdata }] = useLazyQuery(GET_SEARCH_RESULT,
+        {
+            fetchPolicy:"cache-first"
+        }
+        );
 
     const [fetchlocation, { data }] = useLazyQuery(GET_STATE_CITY);
     return (
