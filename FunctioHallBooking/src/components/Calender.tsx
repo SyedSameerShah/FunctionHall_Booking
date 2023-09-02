@@ -1,11 +1,11 @@
 import { DocumentNode, gql, useMutation } from '@apollo/client';
-import { add, addMonths, format, getDate, getDaysInMonth, startOfMonth, sub, subMonths } from 'date-fns';
+import { add, addMonths, format, getDaysInMonth, startOfMonth, sub, subMonths } from 'date-fns';
 import { useState } from 'react';
 import CalenderCell from './CalenderCell';
 import CalenderHeader from './CalenderHeader';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import '../index.css';
+import '../assets/CSS/index.css';
 
 
 const ADD_DATE = gql`
@@ -60,7 +60,6 @@ const Calender: React.FC<props> = ({ id, data, QUERY }) => {
     const nextmonth = (): void => { setstartdate(add(startdate, { months: 1 })) };
     const nextyear = (): void => { setstartdate(add(startdate, { years: 1 })); }
 
-    console.log(startdate, getDate(startdate));
 
     return (
         <>
@@ -97,7 +96,7 @@ const Calender: React.FC<props> = ({ id, data, QUERY }) => {
                 {
                     Array.from({ length: suffixdays }).map((_, index) => {
 
-                        return <CalenderCell setbookingDate={setbookingDate} index={index} startdate={startdate} key={index} display={index + 1} disabled={true} />
+                        return <CalenderCell key={index} setbookingDate={setbookingDate} index={index} startdate={startdate} display={index + 1} disabled={true} />
                     })
                 }
                 <Modal show={modal} centered >
@@ -109,7 +108,7 @@ const Calender: React.FC<props> = ({ id, data, QUERY }) => {
                     <Modal.Body>
                         {
                             <section>
-                                <h5> Location : <i className="fa-solid fa-sm fa-location-dot" style={{color:" #000000"}}></i> {data && data.hall.location.city}, {data && data.hall.location.state}</h5>
+                                <h5> Location : <i className="fa-solid fa-sm fa-location-dot" style={{color:"#000000"}}></i> {data && data.hall.location.city}, {data && data.hall.location.state}</h5>
                                 <h5>Price: {data && data.hall.price} <i className="fa-solid fa-sm fa-indian-rupee-sign" style={{color: "#000000"}}></i> </h5>
                                 <h5>Booking Date: {modal && format(formateDate, "EEE dd LLL yyyy ")}</h5>
                             </section>

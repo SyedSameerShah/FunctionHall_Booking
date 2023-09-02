@@ -7,7 +7,8 @@ const resolvers = {
             let data = await FunctionHall.find({});
             return data;
         },
-        price: async (_, args) => {
+        filter: async (_, args) => {
+            console.log("ll",args,args.date);
             let newdate, ISODate;
             if (args.date !== undefined) {
                 newdate = formatISO(new Date(args.date))
@@ -18,6 +19,9 @@ const resolvers = {
                 'location.city': args.location.city || /./,
                 'location.state': args.location.state || /./
             }
+
+            
+
             if (args.date)
                 query.bookings = { $not: { $elemMatch: { $eq: new Date(ISODate) } } }
 

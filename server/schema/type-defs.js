@@ -6,7 +6,7 @@ type Query {
     halls: [ hall! ]!
     searchHall(name:String): [hall]!
     hall( id:ID! ): hall!
-    price( price: Int, location:locationInput, date:String ) : [hall!]!
+    filter( price: Int, location:locationInput, date:String ) : [hall!]!
     isdate( id:ID!,date:String ): Boolean
 }
 

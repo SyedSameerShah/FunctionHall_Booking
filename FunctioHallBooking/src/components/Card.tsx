@@ -1,5 +1,4 @@
 import {Link } from 'react-router-dom'
-'../assets/images/64d884bb0fdf6167d9813047.jpg' 
 interface props extends React.PropsWithChildren{
     id:String;
     name:String;

@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import { gql, useLazyQuery } from '@apollo/client';
 import { Link } from "react-router-dom";
-import '../index.css';
+import '../assets/CSS/index.css';
 
 type filter = {
     price?: number;
@@ -43,19 +43,17 @@ const GET_SEARCH_RESULT = gql`
 
 
 
-const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
+const Nav: React.FC<{ filterQuery: (variables: object) => void }> = ({ filterQuery }) => {
 
     const [display, setdisplay] = useState<string>("d-none")
     const [search, setsearch] = useState<string>("");
-    const [priceFilter, setpriceFilter] = useState<filter>();
+    const [filter, setfilter] = useState<filter>();
     const [modal, setmodal] = useState<boolean>(false);
     let uniquesearch: Array<string> = []
 
 
     const [fetchname, { data: searchdata }] = useLazyQuery(GET_SEARCH_RESULT,
-        {
-            fetchPolicy:"cache-first"
-        }
+
         );
 
     const [fetchlocation, { data }] = useLazyQuery(GET_STATE_CITY);
@@ -65,7 +63,7 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                 <div className="container-fluid mx-3">
                     <a className="navbar-brand">FESTIVALT</a>
                     <div className="d-flex m-1 " role="search">
-                        <input className="form-control me-2 position-relative rounded-5" type="search" value={search} onChange={event => {
+                        <input className="form-control me-2 position-relative rounded-4" type="search" value={search} onChange={event => {
                             setsearch(event.target.value);
                             fetchname({
                                 variables: {
@@ -75,10 +73,10 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                             setdisplay("d-block");
                         }} placeholder="Enter the name of Venu" aria-label="Search" />
                         <button className="btn btn-secondary rounded-5" type="submit"><i className="fa-solid fa-magnifying-glass" style={{ color: " #030303" }}></i></button>
-                        <section className={`position-absolute bg-light top ${display}`} style={{ top: "47px", width: "205px" }}>
+                        <section className={`position-absolute bg-white top ${display}`} style={{ top: "50px", width: "205px" }}>
                             <ul className="m-0 p-0">
                                 {
-                                    search.length > 0 && searchdata && searchdata.searchHall.map((name: any) => {
+                                    search.length > 1 && searchdata && searchdata.searchHall.map((name: any) => {
                                         return (<li key={name.id} className="list-unstyled p-1 border-bottom">
                                             <Link to={`/halls/${name.id}`} className="text-decoration-none text-dark ">{name.name}</Link>
 
@@ -98,41 +96,42 @@ const Nav: React.FC<{ filter: (variables: object) => void }> = ({ filter }) => {
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            Price: <input type="number" className="form-control m-1" placeholder="Enter the minimum price" onChange={(e) => { setpriceFilter({ price: Number(e.target.value) }); }} />
-                            Date:<input type="date" className="form-control m-1" onChange={(e) => { setpriceFilter({ date: e.target.value }); console.log(priceFilter?.date) }} />
-                            State:<select className=" form-select btn-dark m-1" onChange={(event) => { setpriceFilter({ state: event.target.value }); console.log(priceFilter?.state) }}>
-                                <option value="" selected>select state</option>
+                            Price: <input type="number" className="form-control m-1" placeholder="Enter the minimum price" onChange={(e) => { setfilter({...filter,  price: Number(e.target.value) }); }} />
+                            Date:<input type="date" className="form-control m-1" onChange={(e) => { setfilter({...filter,date: e.target.value })  }} />
+                            State:<select className=" form-select btn-dark m-1" onChange={(event) => { setfilter({...filter, state: event.target.value }) }}>
+                                <option value="" >select state</option>
                                 {
-                                    data && data.halls.map((hall: hall) => {
+                                    data && data.halls.map((hall: hall,index:number) => {
                                         if (!uniquesearch.includes(hall.location.state)) {
                                             uniquesearch.push(hall.location.state)
-                                            return (<option className="" value={hall.location.state}> {hall.location.state}</option>)
+                                            return (<option key={index} className="" value={hall.location.state}> {hall.location.state}</option>)
                                         }
                                     })
                                 }
                             </select>
-                            City: <select className="form-select " onChange={(event) => setpriceFilter({ city: event.target.value })}>
-                                <option value="" selected>select city</option>
+                            City: <select className="form-select " onChange={(event) => setfilter({...filter, city: event.target.value })}>
+                                <option value="" >select city</option>
                                 {
-                                    data && data.halls.map((hall: hall) => {
+                                    data && data.halls.map((hall: hall,index:number) => {
                                         if (!uniquesearch.includes(hall.location.city)) {
                                             uniquesearch.push(hall.location.city)
-                                            return (<option value={hall.location.city}>{hall.location.city}</option>)
+                                            return (<option key={index} value={hall.location.city}>{hall.location.city}</option>)
                                         }
                                     })
                                 }
                             </select>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button className="btn btn-dark" onClick={() => setmodal(false)} >close</Button>
-                            <Button onClick={() => {
-                                filter({
+                            <Button type="button" className="btn btn-dark" onClick={() => setmodal(false)} >close</Button>
+                            <Button type="submit" onClick={() => {
+                                filterQuery({
                                     variables: {
-                                        price: priceFilter?.price,
-                                        city: priceFilter?.city,
-                                        state: priceFilter?.state,
-                                        date: priceFilter?.date?.length != 0 && priceFilter?.date
-                                    }
+                                        price: filter?.price,
+                                        city: filter?.city,
+                                        state: filter?.state,
+                                        date: filter?.date?.length != 0 && filter?.date
+                                    },
+                                    onCompleted: () => setfilter({})
                                 }); setmodal(false)
                             }} className=" btn btn-dark " >Apply</Button>
                         </Modal.Footer>

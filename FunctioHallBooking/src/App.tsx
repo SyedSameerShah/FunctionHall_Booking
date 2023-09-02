@@ -9,8 +9,7 @@ function App() {
     uri: "https://function-hall-booking-zpk8.vercel.app/graphql",
     cache: new InMemoryCache()
   });
-
-
+  
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>

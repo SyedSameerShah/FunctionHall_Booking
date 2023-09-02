@@ -45,7 +45,7 @@ const FunctionHall = () => {
                 <div className="px-3 shadow-lg w-100 p-3">
                     <h5 className="card-title mb-2">Name: {data && data.hall.name}</h5>
                     <p className="card-text mb-2 text-justify" > <strong> Description: </strong>{data && data.hall.discription}</p>
-                    <p className="card-text mb-2"><strong>Location: </strong><i className="fa-solid fa-location-dot" style={{color:" #000000"}}></i> {data && data.hall.location.city}, {data && data.hall.location.state} </p>
+                    <p className="card-text mb-2"><strong>Location: </strong><i className="fa-solid fa-location-dot" style={{color:"#000000"}}></i> {data && data.hall.location.city}, {data && data.hall.location.state} </p>
                     <p className="card-text mb-2"><strong>Price: </strong>{data && data.hall.price} <i className="fa-solid fa-indian-rupee-sign" style={{color: "#000000;"}}></i></p>
                     <p className="card-text mb-2"><strong>Food-type: </strong> {data && data.hall.cuisine}</p>
                     <p className="card-text mb-2"><strong>Occupency: </strong>{data && data.hall.occupency} guest</p>
@@ -55,4 +55,4 @@ const FunctionHall = () => {
     )
 }
 
-export default FunctionHall
+export default FunctionHall;

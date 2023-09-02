@@ -6,7 +6,7 @@
 }
 
 input:focus{
-    outline: none !important;
+    outline: 0em;
 }
 
 .text-justify{
@@ -14,8 +14,9 @@ input:focus{
 }
 
 @media screen and (max-width: 752px) {
+
     .top{
-        top: 85px !important;
+        top: 90px !important;
     }
     .wid-100{
         width: 100% !important;
@@ -32,10 +33,10 @@ input:focus{
 }
 
 
-@media screen and (max-width: 787px) {
+@media (min-width:425px ) and (max-width: 751px) {
 
-    .center{
-        justify-content: stretch !important ;
+    .top{
+        top: 50px !important;
     }
 
     
