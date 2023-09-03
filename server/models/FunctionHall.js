@@ -1,22 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const hallSchema = new mongoose.Schema({
+const hallSchema = new mongoose.Schema(
+  {
     _id: mongoose.Schema.ObjectId,
     name: String,
     price: Number,
-    occupency:String,
-    discription:String,
-    cuisine:String,
+    occupency: String,
+    discription: String,
+    cuisine: String,
     location: {
-        city:String,
-        state:String
+      city: String,
+      state: String,
     },
-    bookings: [Date]
+    bookings: [Date],
+  },
+  { collection: "FunctionHall" }
+);
 
-    
-}, { collection: "FunctionHall" });
+const FunctionHall = mongoose.model("FunctionHall", hallSchema);
 
-
-const FunctionHall = mongoose.model( 'FunctionHall' , hallSchema )
-
-module.exports = { FunctionHall }
+module.exports = { FunctionHall };

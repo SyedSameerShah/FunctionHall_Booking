@@ -4,23 +4,21 @@ import Hall from "./components/Hall";
 import FunctionHall from "./components/FunctionHall";
 
 function App() {
-
   const client = new ApolloClient({
     uri: "https://function-hall-booking-zpk8.vercel.app/graphql",
-    cache: new InMemoryCache()
+    cache: new InMemoryCache(),
   });
-  
+
   return (
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={ <Hall />  } />
-          <Route path="/halls/:id" element={  <FunctionHall/> } />
+          <Route path="/" element={<Hall />} />
+          <Route path="/halls/:id" element={<FunctionHall />} />
         </Routes>
       </BrowserRouter>
     </ApolloProvider>
-  )
+  );
 }
 
 export default App;
-
