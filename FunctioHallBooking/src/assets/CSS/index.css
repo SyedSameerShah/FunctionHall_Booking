@@ -1,43 +1,31 @@
-.bg-color-blue{
-    background-color: #3cb9fc;
-}
-.bg-color-p{
-    background-color: #8a2be2;
+input:focus {
+  outline: 0em;
 }
 
-input:focus{
-    outline: 0em;
-}
-
-.text-justify{
-    text-align: justify;
+.text-justify {
+  text-align: justify;
 }
 
 @media screen and (max-width: 752px) {
-
-    .top{
-        top: 90px !important;
-    }
-    .wid-100{
-        width: 100% !important;
-    }
-    .m-5{
-        margin: 1rem !important ;
-    }
-    input:focus{
-        outline: none !important;
-    }
-    .wrapper{
-        justify-content: center;
-    }
+  .top {
+    top: 90px !important;
+  }
+  .wid-100 {
+    width: 100% !important;
+  }
+  .m-5 {
+    margin: 1rem !important ;
+  }
+  input:focus {
+    outline: none !important;
+  }
+  .wrapper {
+    justify-content: center;
+  }
 }
 
-
-@media (min-width:425px ) and (max-width: 751px) {
-
-    .top{
-        top: 50px !important;
-    }
-
-    
+@media (min-width: 425px) and (max-width: 751px) {
+  .top {
+    top: 50px !important;
+  }
 }
