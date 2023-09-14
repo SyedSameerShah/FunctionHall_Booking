@@ -19,7 +19,7 @@ const CalenderHeader: React.FC<props> = ({
         disabled={disabled || false}
         style={grid}
         onClick={() => {
-          onclick && onclick();
+          onclick &&  onclick();
         }}
       >
         {display}
