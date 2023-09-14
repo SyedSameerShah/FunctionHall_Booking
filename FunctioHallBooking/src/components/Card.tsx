@@ -18,7 +18,7 @@ const Card: React.FC<props> = ({
   let pricefromat = new Intl.NumberFormat("en-IN");
 
   return (
-    <div className="card m-2 shadow-lg " style={{maxWidth:"325px"}}>
+    <div className="card m-2 shadow-lg " style={{width:"337px"}}>
       <img
         className="card-img-top"
         src={imgURL}
